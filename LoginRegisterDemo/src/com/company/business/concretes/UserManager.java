@@ -23,6 +23,7 @@ public class UserManager implements UserService {
         if(isUserValid(user)&&getByMail(user.getEmail())==null){
             System.out.println("Kullanıcı eklendi");
             userDao.add(user);
+            return;
         }
         System.out.println("Kullanıcı ekleme işlemi başarısız");
     }

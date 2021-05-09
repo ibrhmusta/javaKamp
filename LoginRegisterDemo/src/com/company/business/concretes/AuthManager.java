@@ -27,7 +27,7 @@ public class AuthManager implements AuthService {
         if (!user.getPassword().isBlank()) {
             if (tempUser != null && user.getPassword().equals(tempUser.getPassword())) {
                 System.out.println("Kullanıcı girişi başarılı : " + user.getFirstName() + " " + user.getLastName());
-
+                return ;
             }
         }
         System.out.println("Şifreniz veya emailiniz hatalı!");
@@ -39,6 +39,7 @@ public class AuthManager implements AuthService {
         if(tempUser.getVerificationCode().equals(verifyLink)){
             tempUser.setVerify(true);
             System.out.println("Doğrulama başarılı");
+            return;
         }
         System.out.println("Link geçersiz tekrar deneyin...");
     }
