@@ -18,18 +18,29 @@ public class AuthManager implements AuthService {
     public void register(User user) {
             userService.add(user);
             System.out.println("Kullanıcı kaydı başarılı : " + user.getFirstName() + " " + user.getLastName());
+            generateVerificationCode(user);
     }
 
     @Override
     public void login(User user) {
-        User user1 = userService.getByMail(user.getEmail());
+        User tempUser = userService.getByMail(user.getEmail());
         if (!user.getPassword().isBlank()) {
-            if (user1 != null && user.getPassword() == user1.getPassword()) {
+            if (tempUser != null && user.getPassword().equals(tempUser.getPassword())) {
                 System.out.println("Kullanıcı girişi başarılı : " + user.getFirstName() + " " + user.getLastName());
 
             }
         }
         System.out.println("Şifreniz veya emailiniz hatalı!");
+    }
+
+    @Override
+    public void verify(User user, String verifyLink) {
+        User tempUser = userService.getById(user.getId());
+        if(tempUser.getVerificationCode().equals(verifyLink)){
+            tempUser.setVerify(true);
+            System.out.println("Doğrulama başarılı");
+        }
+        System.out.println("Link geçersiz tekrar deneyin...");
     }
 
     @Override
@@ -39,6 +50,12 @@ public class AuthManager implements AuthService {
         if (userService.getByMail(user.getEmail()) == null) {
             userService.add(user);
         }
+        user.setVerify(true);
         System.out.println("Google ile giriş başarılı!");
+    }
+    private void generateVerificationCode(User user){
+        int rndIndex = (int)Math.floor(Math.random()*999999);
+        String code = "https://gverify/user?verificationCode="+rndIndex;
+        user.setVerificationCode(code);
     }
 }

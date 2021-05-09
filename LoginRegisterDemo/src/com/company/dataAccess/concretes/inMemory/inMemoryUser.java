@@ -17,17 +17,17 @@ public class inMemoryUser implements UserDao {
 
     @Override
     public void update(User user) {
-        User user1 = get(user.getId());
-        user1.setFirstName(user.getFirstName());
-        user1.setLastName(user.getLastName());
-        user1.setEmail(user.getEmail());
-        user1.setPassword(user.getPassword());
+        User tempUser = get(user.getId());
+        tempUser.setFirstName(user.getFirstName());
+        tempUser.setLastName(user.getLastName());
+        tempUser.setEmail(user.getEmail());
+        tempUser.setPassword(user.getPassword());
     }
 
     @Override
     public void delete(User user) {
-        User user1 = get(user.getId());
-        users.remove(user1);
+        User tempUser = get(user.getId());
+        users.remove(tempUser);
     }
 
     @Override

@@ -8,6 +8,8 @@ public class User implements Entity {
     private String lastName;
     private String email;
     private String password;
+    private boolean isVerify = false;
+    private String verificationCode;
 
     public User(int id, String firstName, String lastName, String email, String password) {
         super();
@@ -20,6 +22,14 @@ public class User implements Entity {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isVerify() {
+        return isVerify;
+    }
+
+    public void setVerify(boolean verify) {
+        isVerify = verify;
     }
 
     public void setId(int id) {
@@ -56,5 +66,13 @@ public class User implements Entity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }

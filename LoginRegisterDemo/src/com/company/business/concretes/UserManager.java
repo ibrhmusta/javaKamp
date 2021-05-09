@@ -20,7 +20,7 @@ public class UserManager implements UserService {
 
     @Override
     public void add(User user) {
-        if(isUserValid(user)){
+        if(isUserValid(user)&&getByMail(user.getEmail())==null){
             System.out.println("Kullanıcı eklendi");
             userDao.add(user);
         }
@@ -33,17 +33,19 @@ public class UserManager implements UserService {
     }
 
     @Override
+    public User getById(int id) {
+        return userDao.get(id);
+    }
+
+    @Override
     public List<User> getAll() {
         return null;
     }
 
     private boolean isUserValid(User user){
         Pattern pattern = Pattern.compile(eMail_Pattern,Pattern.CASE_INSENSITIVE);
-        if(pattern.matcher(user.getEmail()).find()&&user.getPassword().length()>6
-                &&user.getFirstName().length()>2&&user.getLastName().length()>2&&getByMail(user.getEmail())==null){
-            return true;
-        }
-        return false;
+        return pattern.matcher(user.getEmail()).find() && user.getPassword().length() > 6
+                && user.getFirstName().length() > 2 && user.getLastName().length() > 2;
     }
 }
 
